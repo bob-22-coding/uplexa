@@ -1420,7 +1420,11 @@ void wallet2::cache_tx_data(const cryptonote::transaction& tx, const crypto::has
 //----------------------------------------------------------------------------------------------------
 void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote::transaction& tx, const std::vector<uint64_t> &o_indices, uint64_t height, uint64_t ts, bool miner_tx, bool pool, bool double_spend_seen, const tx_cache_data &tx_cache_data)
 {
-  if (tx.version <= 1) 
+  // v1 non-miner txs cannot exist on this chain anymore and are skipped.
+  // v1 miner txs DO exist on this chain, and the scan logic below fully
+  // supports v1 outputs (pre-RCT legacy path: plaintext amounts,
+  // m_rct = false), so let coinbases through.
+  if (tx.version <= 1 && !miner_tx)
     return;
   // In this function, tx (probably) only contains the base information
   // (that is, the prunable stuff may or may not be included)
