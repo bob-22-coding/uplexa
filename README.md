@@ -93,19 +93,20 @@ library archives (`.a`).
 
 | Dep          | Min. version  | Vendored | Debian/Ubuntu pkg  | Arch pkg     | Fedora            | Optional | Purpose        |
 | ------------ | ------------- | -------- | ------------------ | ------------ | ----------------- | -------- | -------------- |
-| GCC          | 4.7.3         | NO       | `build-essential`  | `base-devel` | `gcc`             | NO       |                |
+| GCC          | 4.7.3[3]      | NO       | `build-essential`  | `base-devel` | `gcc`             | NO       |                |
 | CMake        | 3.5           | NO       | `cmake`            | `cmake`      | `cmake`           | NO       |                |
 | pkg-config   | any           | NO       | `pkg-config`       | `base-devel` | `pkgconf`         | NO       |                |
-| Boost        | 1.58          | NO       | `libboost-all-dev` | `boost`      | `boost-devel`     | NO       | C++ libraries  |
+| Boost        | 1.58[3]       | NO       | `libboost-all-dev` | `boost`      | `boost-devel`     | NO       | C++ libraries  |
 | OpenSSL      | basically any | NO       | `libssl-dev`       | `openssl`    | `openssl-devel`   | NO       | sha256 sum     |
 | libzmq       | 3.0.0         | NO       | `libzmq3-dev`      | `zeromq`     | `cppzmq-devel`    | NO       | ZeroMQ library |
 | OpenPGM      | ?             | NO       | `libpgm-dev`       | `libpgm`     | `openpgm-devel`   | NO       | For ZeroMQ     |
 | libnorm[2]   | ?             | NO       | `libnorm-dev`      |              |               `   | YES      | For ZeroMQ     |
 | libunbound   | 1.4.16        | YES      | `libunbound-dev`   | `unbound`    | `unbound-devel`   | NO       | DNS resolver   |
 | libsodium    | ?             | NO       | `libsodium-dev`    | `libsodium`  | `libsodium-devel` | NO       | cryptography   |
+| hidapi       | any           | NO       | `libhidapi-dev`    | `hidapi`     | `hidapi-devel`    | YES      | Trezor wallets[4] |
 | libunwind    | any           | NO       | `libunwind8-dev`   | `libunwind`  | `libunwind-devel` | YES      | Stack traces   |
 | liblzma      | any           | NO       | `liblzma-dev`      | `xz`         | `xz-devel`        | YES      | For libunwind  |
-| libreadline  | 6.3.0         | NO       | `libreadline6-dev` | `readline`   | `readline-devel`  | YES      | Input editing  |
+| libreadline  | 6.3.0         | NO       | `libreadline-dev`  | `readline`   | `readline-devel`  | YES      | Input editing  |
 | ldns         | 1.6.17        | NO       | `libldns-dev`      | `ldns`       | `ldns-devel`      | YES      | SSL toolkit    |
 | expat        | 1.1           | NO       | `libexpat1-dev`    | `expat`      | `expat-devel`     | YES      | XML parsing    |
 | GTest        | 1.5           | YES      | `libgtest-dev`[1]  | `gtest`      | `gtest-devel`     | YES      | Test suite     |
@@ -116,9 +117,20 @@ library archives (`.a`).
 [1] On Debian/Ubuntu `libgtest-dev` only includes sources and headers. You must
 build the library binary manually. This can be done with the following command ```sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake . && sudo make && sudo mv libg* /usr/lib/ ```
 [2] libnorm-dev is needed if your zmq library was built with libnorm, and not needed otherwise
+[3] The minimum versions above are the historical floor. The current code is
+built and tested with modern toolchains: GCC 11.4 / Boost 1.74 (Ubuntu 22.04)
+and GCC 13.3 / Boost 1.83 (Ubuntu 24.04). Boost 1.83 moves
+`boost::archive::library_version_type` into `boost::serialization`; the
+bundled `boost_compat.h` shim (force-included by the build) bridges this, so
+both old and new Boost versions work.
+[4] On Linux, hidapi requires libusb and libudev (`libusb-1.0-0-dev`,
+`libudev-dev`), which are linked automatically when found.
 
 Debian / Ubuntu one liner for all dependencies  
-``` sudo apt update && sudo apt install build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev```
+``` sudo apt update && sudo apt install build-essential cmake pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libsodium-dev libunwind8-dev liblzma-dev libreadline-dev libldns-dev libexpat1-dev doxygen graphviz libpgm-dev```
+
+Optional, for Trezor hardware wallet support:
+``` sudo apt install libhidapi-dev libusb-1.0-0-dev libudev-dev```
 
 ### Cloning the repository
 
