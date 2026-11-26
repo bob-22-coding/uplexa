@@ -925,7 +925,14 @@ namespace cryptonote
       uint64_t target;
       uint64_t tx_count;
       uint64_t tx_pool_size;
+      // Fork blocks held in memory since daemon start. Losing forks are not
+      // pruned until they win a reorg and the count resets on restart, so
+      // this grows monotonically; it is not a measure of chain instability.
       uint64_t alt_blocks_count;
+      // number of distinct alternative chains (forks) currently held
+      uint64_t alt_chains_count;
+      // length in blocks of the longest alternative chain currently held
+      uint64_t longest_alt_chain_length;
       uint64_t outgoing_connections_count;
       uint64_t incoming_connections_count;
       uint64_t rpc_connections_count;
@@ -960,6 +967,8 @@ namespace cryptonote
         KV_SERIALIZE(tx_count)
         KV_SERIALIZE(tx_pool_size)
         KV_SERIALIZE(alt_blocks_count)
+        KV_SERIALIZE(alt_chains_count)
+        KV_SERIALIZE(longest_alt_chain_length)
         KV_SERIALIZE(outgoing_connections_count)
         KV_SERIALIZE(incoming_connections_count)
         KV_SERIALIZE(rpc_connections_count)

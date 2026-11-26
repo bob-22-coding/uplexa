@@ -33,6 +33,8 @@
 #include <cstdio>
 #include <boost/filesystem.hpp>
 #include <boost/range/adaptor/reversed.hpp>
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders; // Boost 1.73+ removed global _1/_2/_3
 
 #include "common/rules.h"
 #include "include_base_utils.h"
@@ -90,7 +92,7 @@ static const struct {
   { 10, 52279, 0, 1543132500 },
   { 11, 162090, 0, 1555439177 },
   { 12, 295550, 0, 1572134400 },
-  //{ 13, 670000, 0, 1590642120 }, // Enable SS
+  //{ 13, 670000, 0, 1590642120 }, // Fork 13 was planned but never activated on mainnet
 };
 static const uint64_t mainnet_hard_fork_version_1_till = 1;
 
@@ -1839,6 +1841,37 @@ size_t Blockchain::get_alternative_blocks_count() const
   LOG_PRINT_L3("Blockchain::" << __func__);
   CRITICAL_REGION_LOCAL(m_blockchain_lock);
   return m_alternative_chains.size();
+}
+//------------------------------------------------------------------
+void Blockchain::get_alternative_chain_stats(size_t &chains_count, size_t &longest_chain_length) const
+{
+  LOG_PRINT_L3("Blockchain::" << __func__);
+  CRITICAL_REGION_LOCAL(m_blockchain_lock);
+
+  // a chain tip is an alt block that is not the parent of any other alt block
+  std::unordered_set<crypto::hash> parents;
+  parents.reserve(m_alternative_chains.size());
+  for (const auto &alt_bl: m_alternative_chains)
+    parents.insert(alt_bl.second.bl.prev_id);
+
+  chains_count = 0;
+  longest_chain_length = 0;
+  for (const auto &alt_bl: m_alternative_chains)
+  {
+    if (parents.find(alt_bl.first) != parents.end())
+      continue; // not a chain tip
+    ++chains_count;
+    size_t length = 0;
+    crypto::hash h = alt_bl.first;
+    blocks_ext_by_hash::const_iterator it;
+    while ((it = m_alternative_chains.find(h)) != m_alternative_chains.end())
+    {
+      ++length;
+      h = it->second.bl.prev_id;
+    }
+    if (length > longest_chain_length)
+      longest_chain_length = length;
+  }
 }
 //------------------------------------------------------------------
 // This function adds the output specified by <amount, i> to the result_outs container
@@ -4665,6 +4698,8 @@ std::map<uint64_t, std::tuple<uint64_t, uint64_t, uint64_t>> Blockchain:: get_ou
 std::list<std::pair<Blockchain::block_extended_info,std::vector<crypto::hash>>> Blockchain::get_alternative_chains() const
 {
   std::list<std::pair<Blockchain::block_extended_info,std::vector<crypto::hash>>> chains;
+
+  CRITICAL_REGION_LOCAL(m_blockchain_lock);
 
   for (const auto &i: m_alternative_chains)
   {

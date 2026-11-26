@@ -224,9 +224,22 @@ namespace cryptonote
     /**
      * @brief returns the number of alternative blocks stored
      *
+     * This is a cumulative count of fork blocks held in memory since daemon
+     * start. Losing forks are not pruned until they win a reorg, so the count
+     * grows monotonically and resets on restart; it is not a measure of chain
+     * instability.
+     *
      * @return the number of alternative blocks stored
      */
     size_t get_alternative_blocks_count() const;
+
+    /**
+     * @brief returns statistics about the alternative chains currently held
+     *
+     * @param chains_count the number of distinct alternative chains (forks)
+     * @param longest_chain_length the length in blocks of the longest alternative chain
+     */
+    void get_alternative_chain_stats(size_t &chains_count, size_t &longest_chain_length) const;
 
     /**
      * @brief gets a block's hash given a height

@@ -188,6 +188,10 @@ namespace cryptonote
     res.tx_count = m_core.get_blockchain_storage().get_total_transactions() - res.height; //without coinbase
     res.tx_pool_size = m_core.get_pool_transactions_count();
     res.alt_blocks_count = m_core.get_blockchain_storage().get_alternative_blocks_count();
+    size_t alt_chains_count = 0, longest_alt_chain_length = 0;
+    m_core.get_blockchain_storage().get_alternative_chain_stats(alt_chains_count, longest_alt_chain_length);
+    res.alt_chains_count = alt_chains_count;
+    res.longest_alt_chain_length = longest_alt_chain_length;
     uint64_t total_conn = m_p2p.get_connections_count();
     res.outgoing_connections_count = m_p2p.get_outgoing_connections_count();
     res.incoming_connections_count = total_conn - res.outgoing_connections_count;
@@ -1581,6 +1585,10 @@ namespace cryptonote
     res.tx_count = m_core.get_blockchain_storage().get_total_transactions() - res.height; //without coinbase
     res.tx_pool_size = m_core.get_pool_transactions_count();
     res.alt_blocks_count = m_core.get_blockchain_storage().get_alternative_blocks_count();
+    size_t alt_chains_count = 0, longest_alt_chain_length = 0;
+    m_core.get_blockchain_storage().get_alternative_chain_stats(alt_chains_count, longest_alt_chain_length);
+    res.alt_chains_count = alt_chains_count;
+    res.longest_alt_chain_length = longest_alt_chain_length;
     uint64_t total_conn = m_p2p.get_connections_count();
     res.outgoing_connections_count = m_p2p.get_outgoing_connections_count();
     res.incoming_connections_count = total_conn - res.outgoing_connections_count;
