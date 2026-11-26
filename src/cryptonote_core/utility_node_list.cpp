@@ -517,7 +517,7 @@ namespace utility_nodes
     calc_swarm_changes(existing_swarms, seed);
 
     /// Apply changes
-    for (const auto entry : existing_swarms) {
+    for (const auto& entry : existing_swarms) {
 
       const swarm_id_t swarm_id = entry.first;
       const std::vector<crypto::public_key>& unodes = entry.second;

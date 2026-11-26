@@ -30,6 +30,8 @@
 #include <boost/endian/conversion.hpp>
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/udp.hpp>
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders; // Boost 1.83+ removed global _1/_2
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include "transport.hpp"
 #include "messages/messages-common.pb.h"

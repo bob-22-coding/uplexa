@@ -37,7 +37,7 @@ endif ()
 
 # warnings are cleared only for GCC on Linux
 if (NOT (MINGW OR APPLE OR FREEBSD OR OPENBSD OR DRAGONFLY))
-  add_compile_options("${WARNINGS_AS_ERRORS_FLAG}") # applies only to targets that follow
+  # add_compile_options("${WARNINGS_AS_ERRORS_FLAG}") # disabled: GCC 11+ false positives
 endif()
 
 function (monero_private_headers group)

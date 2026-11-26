@@ -29,6 +29,8 @@
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
 #include <boost/algorithm/string.hpp>
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders; // Boost 1.73+ removed global _1/_2/_3
 
 #include "include_base_utils.h"
 #include "string_tools.h"
@@ -1649,15 +1651,10 @@ namespace cryptonote
     const el::Level level = el::Level::Warning;
     switch (state) {
       case HardFork::LikelyForked:
-        MCLOG_RED(level, "global", "**********************************************************************");
-        MCLOG_RED(level, "global", "Last scheduled hard fork is too far in the past.");
-        MCLOG_RED(level, "global", "We are most likely forked from the network. Daemon update needed now.");
-        MCLOG_RED(level, "global", "**********************************************************************");
+        MCLOG_RED(level, "global", "A new hard fork is long overdue to activate. Check for a daemon update.");
         break;
       case HardFork::UpdateNeeded:
-        MCLOG_RED(level, "global", "**********************************************************************");
-        MCLOG_RED(level, "global", "Last scheduled hard fork time shows a daemon update is needed soon.");
-        MCLOG_RED(level, "global", "**********************************************************************");
+        MCLOG_RED(level, "global", "A new hard fork is scheduled and will activate soon. A daemon update may be needed.");
         break;
       default:
         break;

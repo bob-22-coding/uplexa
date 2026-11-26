@@ -32,6 +32,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/asio/ip/address.hpp>
 #include <boost/bind.hpp>
+using namespace boost::placeholders; // Boost 1.83+ removed global _1/_2
 #include "common/command_line.h"
 #include "common/i18n.h"
 

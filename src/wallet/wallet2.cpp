@@ -86,6 +86,8 @@ extern "C"
 #include "crypto/crypto-ops.h"
 }
 using namespace std;
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders; // Boost 1.83+ removed global _1/_2
 using namespace crypto;
 using namespace cryptonote;
 

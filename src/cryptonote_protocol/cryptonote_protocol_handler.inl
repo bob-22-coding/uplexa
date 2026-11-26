@@ -37,6 +37,11 @@
 // developer rfree: this code is caller of our new network code, and is modded; e.g. for rate limiting
 
 #include <boost/interprocess/detail/atomic.hpp>
+#include <boost/bind/bind.hpp>
+// Boost 1.73+ removed global placeholders _1/_2/_3
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+using boost::placeholders::_3;
 #include <list>
 #include <ctime>
 

@@ -37,6 +37,10 @@
 #include <boost/foreach.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/uuid/random_generator.hpp>
+#include <boost/bind/bind.hpp>
+// Boost 1.73+ removed global placeholders _1/_2
+using boost::placeholders::_1;
+using boost::placeholders::_2;
 #include <boost/chrono.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/asio/deadline_timer.hpp>

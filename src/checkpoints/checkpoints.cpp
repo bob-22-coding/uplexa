@@ -40,6 +40,8 @@ using namespace epee;
 #include "string_tools.h"
 #include "storages/portable_storage_template_helper.h" // epee json include
 #include "serialization/keyvalue_serialization.h"
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders; // Boost 1.83+ removed global _1/_2
 
 #undef MONERO_DEFAULT_LOG_CATEGORY
 #define MONERO_DEFAULT_LOG_CATEGORY "checkpoints"

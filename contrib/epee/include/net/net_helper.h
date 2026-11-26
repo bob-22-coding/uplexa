@@ -34,6 +34,11 @@
 #include <string>
 #include <boost/version.hpp>
 #include <boost/asio.hpp>
+#include <boost/bind/bind.hpp>
+// Boost 1.73+ removed global placeholders _1/_2/_3
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+using boost::placeholders::_3;
 #include <boost/asio/ssl.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <boost/lambda/bind.hpp>

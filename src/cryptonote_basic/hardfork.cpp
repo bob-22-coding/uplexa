@@ -330,6 +330,10 @@ HardFork::State HardFork::get_state(time_t t) const
   if (heights.size() <= 1)
     return Ready;
 
+  // If we are on the latest defined hard fork, we're up to date regardless of timestamp
+  if (current_fork_index == heights.size() - 1)
+    return Ready;
+
   time_t t_last_fork = heights.back().time;
   if (t >= t_last_fork + forked_time)
     return LikelyForked;

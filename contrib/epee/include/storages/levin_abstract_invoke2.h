@@ -28,6 +28,11 @@
 
 #include "portable_storage_template_helper.h"
 #include <boost/utility/value_init.hpp>
+#include <boost/bind.hpp>
+// Boost 1.73+ removed global placeholders _1/_2/_3
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+using boost::placeholders::_3;
 #include "net/levin_base.h"
 
 #undef MONERO_DEFAULT_LOG_CATEGORY

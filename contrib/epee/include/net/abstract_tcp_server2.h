@@ -52,6 +52,10 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/thread/thread.hpp>
+// Boost 1.73+ removed global placeholders _1/_2/_3
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+using boost::placeholders::_3;
 #include "net_utils_base.h"
 #include "syncobj.h"
 #include "connection_basic.hpp"

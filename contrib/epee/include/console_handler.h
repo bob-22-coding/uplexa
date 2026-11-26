@@ -38,15 +38,19 @@
 #include <stdio.h>
 #endif
 #include <boost/thread.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
-
 #ifdef HAVE_READLINE
   #include "readline_buffer.h"
 #endif
 
 namespace epee
 {
+  // Boost 1.73+ removed global placeholders _1/_2/_3 from the global namespace
+  using boost::placeholders::_1;
+  using boost::placeholders::_2;
+  using boost::placeholders::_3;
   class async_stdin_reader
   {
   public:

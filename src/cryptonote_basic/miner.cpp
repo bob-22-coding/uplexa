@@ -45,6 +45,8 @@
 #include "string_tools.h"
 #include "storages/portable_storage_template_helper.h"
 #include "boost/logic/tribool.hpp"
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders; // Boost 1.73+ removed global _1/_2/_3
 
 #ifdef __APPLE__
   #include <sys/times.h>

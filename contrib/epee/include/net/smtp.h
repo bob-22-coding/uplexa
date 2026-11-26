@@ -34,6 +34,10 @@
 #include <string>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
+// Boost 1.73+ removed global placeholders _1/_2/_3
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+using boost::placeholders::_3;
 #include <boost/lexical_cast.hpp>
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/transform_width.hpp>

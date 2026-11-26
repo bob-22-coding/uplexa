@@ -30,6 +30,11 @@
 #include <boost/unordered_map.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
+#include <boost/bind/bind.hpp>
+// Boost 1.73+ removed global placeholders _1/_2/_3
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+using boost::placeholders::_3;
 
 #include <atomic>
 

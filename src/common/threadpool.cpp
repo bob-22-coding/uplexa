@@ -35,6 +35,8 @@
 
 #include "cryptonote_config.h"
 #include "common/util.h"
+#include <boost/bind.hpp>
+using namespace boost::placeholders; // Boost 1.73+ removed global _1/_2/_3
 
 static __thread int depth = 0;
 static __thread bool is_leaf = false;

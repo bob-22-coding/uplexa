@@ -32,6 +32,7 @@
 
 #include <list>
 #include <numeric>
+#define BOOST_TIMER_ENABLE_DEPRECATED
 #include <boost/timer.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/random_generator.hpp>

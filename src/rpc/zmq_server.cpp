@@ -29,6 +29,8 @@
 
 #include "zmq_server.h"
 #include <boost/chrono/chrono.hpp>
+#include <boost/bind/bind.hpp>
+using namespace boost::placeholders; // Boost 1.73+ removed global _1/_2/_3
 
 namespace cryptonote
 {

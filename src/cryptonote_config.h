@@ -173,7 +173,7 @@ static_assert(STAKING_PORTIONS % 3 == 0, "Use a multiple of three, so that it di
 #define HF_VERSION_MIN_MIXIN_6                  7
 #define HF_VERSION_MIN_MIXIN_10                 8
 #define HF_VERSION_ENFORCE_RCT                  6
-#define HF_VERSION_PER_BYTE_FEE                 15 // unnecessary
+#define HF_VERSION_PER_BYTE_FEE                 15 // Intentionally unreachable; fork 13 never activated so per-byte fees stay off
 
 #define PER_KB_FEE_QUANTIZATION_DECIMALS        8
 
@@ -209,8 +209,8 @@ namespace config
     uint64_t const GOVERNANCE_REWARD_INTERVAL_IN_BLOCKS = ((60 * 60 * 24 * 7) / DIFFICULTY_TARGET_V2);
     std::string const GOVERNANCE_WALLET_ADDRESS[] =
     {
-      "UPX1YovsJSNQG886X5oZwnj5Hg9v7XVDXHYATDV5PnT4ZeFz1qcM1mo2kwT6EQeHSM7vm7fCWwYRaETeaHcpy3K81ucqjGdFna", // hardfork v7-10
-      "UPX1YovsJSNQG886X5oZwnj5Hg9v7XVDXHYATDV5PnT4ZeFz1qcM1mo2kwT6EQeHSM7vm7fCWwYRaETeaHcpy3K81ucqjGdFna", // hardfork v7-10
+      "UPX1iCvbzH8JjcormpseNj6XWGdAN6YwQhwEztCGJBX9Xq5kM19vjs7Py9Qtc5Gd7SLfes9pq8Py9EU32NhDYbnM2C31EEDerT", // hardfork v7-12
+      "UPX1iCvbzH8JjcormpseNj6XWGdAN6YwQhwEztCGJBX9Xq5kM19vjs7Py9Qtc5Gd7SLfes9pq8Py9EU32NhDYbnM2C31EEDerT", // hardfork v13+
     };
 
   namespace testnet
@@ -264,14 +264,6 @@ namespace config
 
 namespace cryptonote
 {
-  enum network_version // This shit isn't needed anymore.
-  {
-    network_version_7 = 7,
-    network_version_8,
-    network_version_13_utility_nodes, // Proof Of Stake w/ Utility Nodes
-    network_version_10_bulletproofs, // Bulletproofs, Utility Node Grace Registration Period, Batched Governance
-    network_version_11_swarms,
-  };
   enum network_type : uint8_t
   {
     MAINNET = 0,
